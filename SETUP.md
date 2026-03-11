@@ -132,31 +132,30 @@ psql -d gis -c "SELECT pg_reload_conf();"
 # psql -d gis -c "SELECT PostGIS_full_version();"
 
 osm2pgsql -d gis -U $USER --create --slim -G --hstore monaco-latest.osm.pbf
-
-cd openstreetmap-carto
-osm2pgsql -d gis -O flex -S openstreetmap-carto-flex.lua ../monaco-latest.osm.pbf
+osm2pgsql -d gis -O flex -S openstreetmap-carto/openstreetmap-carto-flex.lua monaco-latest.osm.pbf
 
 # Bootstrap indexes
+cd openstreetmap-carto
 python3 scripts/indexes.py -0 | xargs -0 -P0 -I{} psql -d gis -c "{}"
-psql -d gis -f functions.sql
+cd ..
 
-# Note: not sure about this one, it's redundant somehow...
-psql -d gis -f indexes.sql
+psql -d gis -f openstreetmap-carto/functions.sql
+psql -d gis -f openstreetmap-carto/indexes.sql
+psql -d gis -f openstreetmap-carto/common-values.sql
+
+# run the script to download missing polygons or whatever
+python3 openstreetmap-carto/scripts/get-external-data.py
 ```
 
 ### Kosmtik Setup
 
 ```sh
 # Setup Kosmtik
-cd ../kosmtik
+cd kosmtik
 npm install
+cd ..
 
-# Run the server locally (from kosmtik dir)
-node index.js serve ../openstreetmap-carto/project.mml
-
-# If encountering an error such as this:
-# "Postgis Plugin: ERROR: relation "icesheet_polygons" does not exist"
-# run the script to download missing polygons or whatever
-cd ../openstreetmap-carto
-python3 scripts/get-external-data.py
+# Run the tile server locally
+node kosmtik/index.js serve openstreetmap-carto/project.mml
+node kosmtik/index.js serve openstreetmap-carto/project.mml --theme solarized-dark
 ```
