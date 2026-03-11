@@ -1,20 +1,20 @@
-# Ubuntu Setup
+# Setup Guide
+
+This guide covers setting up the environment on both Ubuntu and macOS. Once the system-specific dependencies are installed, proceed to the **Cross-Platform Setup**.
+
+## 1. System Dependencies
+
+### Ubuntu
 
 ```sh
 sudo apt update
 
 # Python latest
-sudo apt update
 sudo apt install software-properties-common -y
 sudo add-apt-repository ppa:deadsnakes/ppa -y
 sudo apt update
 sudo apt install python3.14 python3.14-venv -y
 # Assert: python3.14 --version
-
-# Create virtual environment (Note: pip installed via venv activate)
-python3.14 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
 
 # PostgreSQL
 sudo apt install postgresql -y
@@ -45,17 +45,11 @@ sudo apt install postgis -y
 # Mapnik (geospatial visualization & processing toolkit)
 sudo apt install libmapnik-dev mapnik-utils python3-mapnik
 
-# Download an example `.pbf`
-curl -O -L https://download.geofabrik.de/europe/monaco-latest.osm.pbf
-
 # Start the PostgreSQL server
 sudo systemctl start postgresql
 # Assert: sudo systemctl status postgresql
 
-# -------------------------
-# Initializing the database
-# -------------------------
-
+# Initialize database users and initial DBs
 # Note: this command will likely return an error message say "Permission denied ..."
 # but ignore it because the command probably worked and is just noise
 sudo -u postgres createuser -s $USER
@@ -63,22 +57,93 @@ sudo -u postgres createuser -s $USER
 # Optional: PostgreSQL convention to have matching user/db name
 sudo -u postgres createdb $USER
 sudo -u postgres createdb -E UTF8 -T template0 gis
+```
+
+### macOS
+
+```sh
+# Ensure Homebrew is installed and updated
+brew update
+
+# Python latest
+brew install python
+# Assert: python3 --version
+
+# PostgreSQL
+brew install postgresql
+# Assert: psql --version
+
+# Nginx
+brew install nginx
+# Assert: nginx -v
+
+# Node/NPM
+brew install node
+# Assert: node -v
+
+# osm2pgsql
+brew install osm2pgsql
+
+# PostgreSQL Geographic Information Systems (SQL extensions)
+brew install postgis
+
+# Mapnik (geospatial visualization & processing toolkit)
+brew install mapnik
+
+# Start the PostgreSQL server
+brew services start postgresql
+# Assert: brew services info postgresql
+
+# Initialize database
+# Homebrew PostgreSQL uses your macOS user by default as the superuser
+createdb gis
+```
+
+## 2. Cross-Platform Setup
+
+### Python Virtual Environment
+
+```sh
+# Create virtual environment (Note: pip installed via venv activate)
+# Note: Use python3.14 if on Ubuntu, or just python3 on macOS depending on your installation
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Download Example Data
+
+```sh
+# Download an example `.pbf`
+curl -O -L https://download.geofabrik.de/europe/monaco-latest.osm.pbf
+```
+
+### Initialize and Import the Database
+
+```sh
 # Assert: psql -d gis
 
 psql -d gis -c "CREATE EXTENSION postgis;"
 psql -d gis -c "CREATE EXTENSION hstore;"
 psql -d gis -c "ALTER SYSTEM SET jit=off;"
 psql -d gis -c "SELECT pg_reload_conf();"
+
 osm2pgsql -d gis -U $USER --create --slim -G --hstore monaco-latest.osm.pbf
+
 cd openstreetmap-carto
 osm2pgsql -d gis -O flex -S openstreetmap-carto-flex.lua ../monaco-latest.osm.pbf
 
 # Bootstrap indexes
-python3.14 scripts/indexes.py -0 | xargs -0 -P0 -I{} psql -d gis -c "{}"
+python3 scripts/indexes.py -0 | xargs -0 -P0 -I{} psql -d gis -c "{}"
 psql -d gis -f functions.sql
+
 # Note: not sure about this one, it's redundant somehow...
 psql -d gis -f indexes.sql
+```
 
+### Kosmtik Setup
+
+```sh
 # Setup Kosmtik
 cd ../kosmtik
 npm install
@@ -86,5 +151,3 @@ npm install
 # Run the server locally (from kosmtik dir)
 node index.js serve ../openstreetmap-carto/project.mml
 ```
-
-
