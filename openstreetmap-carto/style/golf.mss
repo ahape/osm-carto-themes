@@ -1,4 +1,3 @@
-@golf-color: #666;
 
 #landcover[zoom >= 12] {
   ::high-zoom[zoom >= 12] {

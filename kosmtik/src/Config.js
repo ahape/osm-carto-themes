@@ -148,6 +148,9 @@ class Config extends StateBase {
             default: 'carto',
             help: 'Specify a renderer by its name, carto is the default.'
         });
+        this.opts.option('theme', {
+            help: 'Optional theme to apply (e.g., solarized-dark) by appending style/themes/<theme>.mss'
+        });
         this.opts.option('metatile', {
             help: 'Override mml metatile setting [Default: mml setting]'
         });

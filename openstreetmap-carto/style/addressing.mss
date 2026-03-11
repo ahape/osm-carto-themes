@@ -1,7 +1,5 @@
 /* Features related to (postal) adresses: */
 
-@address-color: #666;
-
 #interpolation {
   [zoom >= 17] {
     line-color: @address-color;
@@ -66,7 +64,7 @@ no official postal addresses) */
   [zoom >= 17] {
     text-name: "[name]";
     text-face-name: @book-fonts;
-    text-fill: #444;
+    text-fill: @building-text-color;
     text-halo-radius: @standard-halo-radius;
     text-halo-fill: @standard-halo-fill;
     text-size: 11;

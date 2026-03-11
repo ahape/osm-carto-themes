@@ -6,12 +6,12 @@
       line/line-width: 1;
       line/line-join: round;
       line/line-cap: round;
-      line/line-color: #808080;
+      line/line-color: @aerialway-line;
 
       dash/line-width: 3;
       dash/line-join: round;
       dash/line-cap: round;
-      dash/line-color: black;
+      dash/line-color: @aerialway-dash;
       dash/line-dasharray: 0.4,13;
       dash/line-clip: false;
     }
@@ -22,11 +22,11 @@
       line/line-width: 1;
       line/line-join: round;
       line/line-cap: round;
-      line/line-color: #808080;
+      line/line-color: @aerialway-line;
 
       dash/line-width: 3.5;
       dash/line-join: round;
-      dash/line-color: #707070;
+      dash/line-color: @aerialway-goods-dash;
       dash/line-dasharray: 6,25;
       dash/line-clip: false;
     }
@@ -43,11 +43,11 @@
       line/line-width: 1;
       line/line-join: round;
       line/line-cap: round;
-      line/line-color: #808080;
+      line/line-color: @aerialway-line;
 
       dash/line-width: 4;
       dash/line-join: round;
-      dash/line-color: black;
+      dash/line-color: @aerialway-dash;
       dash/line-dasharray: 1,30;
       dash/line-clip: false;
     }
@@ -58,11 +58,11 @@
       line/line-width: 0.7;
       line/line-join: round;
       line/line-cap: round;
-      line/line-color: #999999;
+      line/line-color: @conveyor-line;
 
       dash/line-width: 2;
       dash/line-join: round;
-      dash/line-color: #999999;
+      dash/line-color: @conveyor-line;
       dash/line-dasharray: 4,6;
 
       [zoom >= 16] {
@@ -77,11 +77,11 @@
     [zoom >= 14] {
       line/line-width: .7;
       line/line-join: round;
-      line/line-color: #909090;
-      line/line-dasharray: 0,.7,14,.7;
+      line/line-color: @pipeline-line;
+      line-dasharray: 0,.7,14,.7;
       dash/line-width: 2;
       dash/line-join: round;
-      dash/line-color: #909090;
+      dash/line-color: @pipeline-line;
       dash/line-dasharray: 0,.7,.7,12.6,.7,.7;
       [zoom >= 15] {
         line/line-width: 1;
@@ -105,8 +105,8 @@
         center/line-color: @land-color;
         center/line-join: round;
         [substance = 'water'] { center/line-color: @water-color; }
-        [substance = 'gas'] { center/line-color: #c1c1c1; } // Lch(78,0,0)
-        [substance = 'oil'] { center/line-color: #cfbfa5; } // Lch(78,15,83)
+        [substance = 'gas'] { center/line-color: @pipeline-gas-center; } // Lch(78,0,0)
+        [substance = 'oil'] { center/line-color: @pipeline-oil-center; } // Lch(78,15,83)
       }
       [zoom >= 18] {
         line/line-width: 3;
@@ -143,7 +143,7 @@
   [feature = 'man_made_pipeline'] {
     [zoom >= 17] {
       text-name: "[name]";
-      text-fill: #666666;
+      text-fill: @aerialway-text;
       text-size: 10;
       text-dy: 4;
       text-spacing: 900;
