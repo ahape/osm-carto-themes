@@ -70,7 +70,7 @@ brew install python
 # Assert: python3 --version
 
 # PostgreSQL
-brew install postgresql
+brew install postgresql@17
 # Assert: psql --version
 
 # Nginx
@@ -91,8 +91,8 @@ brew install postgis
 brew install mapnik
 
 # Start the PostgreSQL server
-brew services start postgresql
-# Assert: brew services info postgresql
+brew services start postgresql@17
+# Assert: brew services info postgresql@17
 
 # Initialize database
 # Homebrew PostgreSQL uses your macOS user by default as the superuser
@@ -128,6 +128,9 @@ psql -d gis -c "CREATE EXTENSION hstore;"
 psql -d gis -c "ALTER SYSTEM SET jit=off;"
 psql -d gis -c "SELECT pg_reload_conf();"
 
+# Optional check to make sure PostGIS is setup correctly
+# psql -d gis -c "SELECT PostGIS_full_version();"
+
 osm2pgsql -d gis -U $USER --create --slim -G --hstore monaco-latest.osm.pbf
 
 cd openstreetmap-carto
@@ -150,4 +153,10 @@ npm install
 
 # Run the server locally (from kosmtik dir)
 node index.js serve ../openstreetmap-carto/project.mml
+
+# If encountering an error such as this:
+# "Postgis Plugin: ERROR: relation "icesheet_polygons" does not exist"
+# run the script to download missing polygons or whatever
+cd ../openstreetmap-carto
+python3 scripts/get-external-data.py
 ```
