@@ -1,30 +1,10 @@
-@font-face {
-    font-family: 'fira_sanslight';
-    src: url('./fonts/FiraSans-Light.eot');
-    src: url('./fonts/FiraSans-Light.eot?#iefix') format('embedded-opentype'),
-         url('./fonts/FiraSans-Light.woff') format('woff'),
-         url('./fonts/FiraSans-Light.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'dejavu_sansbook';
-    src: url('./fonts/DejaVuSans-webfont.eot');
-    src: url('./fonts/DejaVuSans-webfont.eot?#iefix') format('embedded-opentype'),
-         url('./fonts/DejaVuSans-webfont.woff') format('woff'),
-         url('./fonts/DejaVuSans-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
 body, div, ul, li, a {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'fira_sanslight', sans-serif;
+    font-family: sans-serif;
 }
 
 #map {
@@ -40,7 +20,6 @@ body, div, ul, li, a {
     background-color: #444;
     color: #ecf0f1;
     text-align: center;
-    font-family: 'fira_sanslight';
 }
 
 .kosmtik-alert {
@@ -63,7 +42,6 @@ body, div, ul, li, a {
 }
 .kosmtik-alert .close:before {
     content: '❌ ';
-    font-family: 'dejavu_sansbook';
 }
 .alert .kosmtik-alert {
     padding: 10px;
