@@ -70,7 +70,7 @@ brew install python
 # Assert: python3 --version
 
 # PostgreSQL
-brew install postgresql
+brew install postgresql@17
 # Assert: psql --version
 
 # Nginx
@@ -91,8 +91,8 @@ brew install postgis
 brew install mapnik
 
 # Start the PostgreSQL server
-brew services start postgresql
-# Assert: brew services info postgresql
+brew services start postgresql@17
+# Assert: brew services info postgresql@17
 
 # Initialize database
 # Homebrew PostgreSQL uses your macOS user by default as the superuser
@@ -128,26 +128,34 @@ psql -d gis -c "CREATE EXTENSION hstore;"
 psql -d gis -c "ALTER SYSTEM SET jit=off;"
 psql -d gis -c "SELECT pg_reload_conf();"
 
-osm2pgsql -d gis -U $USER --create --slim -G --hstore monaco-latest.osm.pbf
+# Optional check to make sure PostGIS is setup correctly
+# psql -d gis -c "SELECT PostGIS_full_version();"
 
-cd openstreetmap-carto
-osm2pgsql -d gis -O flex -S openstreetmap-carto-flex.lua ../monaco-latest.osm.pbf
+osm2pgsql -d gis -U $USER --create --slim -G --hstore monaco-latest.osm.pbf
+osm2pgsql -d gis -O flex -S openstreetmap-carto/openstreetmap-carto-flex.lua monaco-latest.osm.pbf
 
 # Bootstrap indexes
+cd openstreetmap-carto
 python3 scripts/indexes.py -0 | xargs -0 -P0 -I{} psql -d gis -c "{}"
-psql -d gis -f functions.sql
+cd ..
 
-# Note: not sure about this one, it's redundant somehow...
-psql -d gis -f indexes.sql
+psql -d gis -f openstreetmap-carto/functions.sql
+psql -d gis -f openstreetmap-carto/indexes.sql
+psql -d gis -f openstreetmap-carto/common-values.sql
+
+# run the script to download missing polygons or whatever
+python3 openstreetmap-carto/scripts/get-external-data.py
 ```
 
 ### Kosmtik Setup
 
 ```sh
 # Setup Kosmtik
-cd ../kosmtik
+cd kosmtik
 npm install
+cd ..
 
-# Run the server locally (from kosmtik dir)
-node index.js serve ../openstreetmap-carto/project.mml
+# Run the tile server locally
+node kosmtik/index.js serve openstreetmap-carto/project.mml
+node kosmtik/index.js serve openstreetmap-carto/project.mml --theme solarized-dark
 ```

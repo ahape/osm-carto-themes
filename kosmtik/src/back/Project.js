@@ -34,6 +34,12 @@ class Project extends ConfigEmitter {
             Loader = this.config.getLoader(ext),
             loader = new Loader(this);
         this.mml = loader.load();
+        if (this.config.parsed_opts.theme) {
+            var themePath = path.join('style', 'themes', this.config.parsed_opts.theme + '.mss');
+            this.mml.Stylesheet = this.mml.Stylesheet || [];
+            this.mml.Stylesheet.push({ id: themePath, data: fs.readFileSync(path.join(this.root, themePath), 'utf8') });
+            this.config.log('Appended theme stylesheet:', themePath);
+        }
         this.loadTime = Date.now();
         this.changeState('loaded');
         return this.mml;

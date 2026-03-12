@@ -36,6 +36,7 @@ maxzoom: 22
 srs: *srs
 
 Stylesheet:
+  - style/themes/default.mss
   - style/style.mss
   - style/fonts.mss
   - style/shapefiles.mss

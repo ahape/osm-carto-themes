@@ -1,0 +1,39 @@
+# Ubuntu/Linux-only requirements
+# Install with: pip install -r requirements-ubuntu.txt
+#
+# These packages are either:
+#   - Ubuntu system tools with no macOS equivalent
+#   - Bindings to Linux-only libraries (D-Bus, systemd, APT, etc.)
+#   - Packages with Ubuntu-specific platform markers
+
+# --- Launchpad / Ubuntu web services ---
+launchpadlib>=1.10.16
+lazr.restfulclient>=0.14.4
+lazr.uri>=1.0.6
+wadllib>=1.3.6
+
+# --- Linux system / D-Bus bindings ---
+dbus-python>=1.2.18       # D-Bus IPC — Linux only
+jeepney>=0.7.1            # Pure-Python D-Bus — Linux only
+SecretStorage>=3.3.1      # Linux keyring via D-Bus
+systemd-python>=234       # systemd bindings — Linux only
+
+# --- GTK / Cairo graphics stack ---
+PyGObject>=3.42.1         # GLib/GTK bindings — Linux only
+pycairo>=1.20.1           # Cairo 2D graphics — Linux only
+
+# --- Geospatial / mapping (heavy system deps) ---
+mapnik>=3.0.23            # Requires libmapnik — Linux only
+osmium>=3.2.0             # OpenStreetMap C++ lib — Linux only
+
+# --- Ubuntu-specific system tools ---
+cloud-init>=25.3          # Ubuntu cloud provisioning
+command-not-found>=0.3    # Ubuntu shell helper
+distro-info>=1.1          # Ubuntu distro metadata
+python-apt>=2.4.0         # APT package manager bindings
+ubuntu-pro-client>=8001   # Ubuntu Pro/ESM client
+ufw>=0.36.1               # Uncomplicated Firewall
+unattended-upgrades>=0.1  # Ubuntu auto-update daemon
+
+# --- curl bindings (macOS possible but painful) ---
+pycurl>=7.44.1            # Requires libcurl + SSL; use requests on macOS instead

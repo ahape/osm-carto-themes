@@ -16,6 +16,7 @@ class PNGExporter extends BaseExporter {
         var self = this;
         var map = new mapnik.Map(+this.options.width, +this.options.height);
         map.fromString(this.project.render(), {base: this.project.root}, function render (err, map) {
+            if (err) throw err;
             var source = new mapnik.Projection("epsg:4326");
             var dest = new mapnik.Projection(map.srs);
             var proj_tr = new mapnik.ProjTransform(source, dest);

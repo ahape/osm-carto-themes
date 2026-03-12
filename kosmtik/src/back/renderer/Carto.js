@@ -24,9 +24,6 @@ class Carto {
                 if (v.type === 'error') {
                     console.error(carto.Util.getMessageToPrint(v));
                 }
-                else if (v.type === 'warning') {
-                    console.warn(carto.Util.getMessageToPrint(v));
-                }
             });
         }
     
