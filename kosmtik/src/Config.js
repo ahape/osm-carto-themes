@@ -3,9 +3,7 @@ var path = require('path'),
     semver = require('semver'),
     yaml = require('js-yaml'),
     StateBase = require('./back/StateBase.js').StateBase,
-    Helpers = require('./back/Helpers.js').Helpers,
     mapnik = require('@mapnik/mapnik'),
-    PluginsManager = require('./back/PluginsManager.js').PluginsManager,
     packageVersion = require('../package.json').version;
 
 global.kosmtik = {};
@@ -18,15 +16,12 @@ class Config extends StateBase {
         this.configpath = configpath;
         this.root = root;
         this.version = packageVersion;
-        this.helpers = new Helpers(this);
         this.initOptions();
-        this.initExporters();
         this.initLoaders();
         this.initRenderers();
         this.initStatics();
         if (!this.configpath) this.ensureDefaultUserConfigPath();
         this.loadUserConfig();
-        this.pluginsManager = new PluginsManager(this);  // Do we need back ref?
         this.emit('loaded');
         this.on('server:init', this.attachRoutes.bind(this));
         this.parsed_opts = {
@@ -73,14 +68,6 @@ class Config extends StateBase {
         } catch (err) {
             if (err.code !== 'EEXIST') throw err;
         }
-    };
-
-    initExporters() {
-        this.exporters = {};
-    };
-
-    registerExporter(format, path) {
-        this.exporters[format] = path;
     };
 
     initRenderers() {
@@ -135,9 +122,6 @@ class Config extends StateBase {
             default: this.defaultMapnikVersion(),
             help: 'Optional mapnik reference version to be passed to Carto'
         });
-        this.opts.option('proxy', {
-            help: 'Optional proxy to use when doing http requests'
-        });
         this.opts.option('keepcache', {
             full: 'keep-cache',
             flag: true,
@@ -172,24 +156,13 @@ class Config extends StateBase {
     initStatics() {
         this._js = [
             '/node_modules/leaflet/dist/leaflet-src.js',
-            '/node_modules/leaflet-formbuilder/Leaflet.FormBuilder.js',
             '/src/front/Core.js',
             '/config/',
             './config/',
-            '/src/front/Autocomplete.js',
-            '/src/front/DataInspector.js',
-            '/src/front/MetatilesBounds.js',
-            '/src/front/Sidebar.js',
-            '/src/front/Toolbar.js',
-            '/src/front/FormBuilder.js',
-            '/src/front/Settings.js',
-            '/src/front/Command.js',
             '/src/front/Map.js'
         ];
         this._css = [
             '/node_modules/leaflet/dist/leaflet.css',
-            '/src/front/Sidebar.css',
-            '/src/front/Toolbar.css',
             '/src/front/Core.css'
         ];
     };
@@ -204,13 +177,7 @@ class Config extends StateBase {
 
     toFront() {
         var options = {
-            exportFormats: Object.keys(this.exporters),
-            autoReload: this.getFromUserConfig('autoReload', true),
-            backendPolling: this.getFromUserConfig('backendPolling', true),
-            showCrosshairs: this.getFromUserConfig('showCrosshairs', false),
-            dataInspectorLayers: {
-                '__all__': true
-            }
+            backendPolling: this.getFromUserConfig('backendPolling', true)
         };
         this.emit('tofront', {options: options});
         return options;

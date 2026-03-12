@@ -1,5 +1,11 @@
-var mapnik = require('@mapnik/mapnik'),
-    zoomXYToLatLng = require('./GeoUtils.js').zoomXYToLatLng;
+var mapnik = require('@mapnik/mapnik');
+
+function zoomXYToLatLng(zoom, x, y) {
+    var n = Math.pow(2, zoom);
+    var lon = x / n * 360 - 180;
+    var lat = Math.atan(Math.sinh(Math.PI * (1 - 2 * y / n))) * 180 / Math.PI;
+    return [lat, lon];
+}
 
 class Tile {
     constructor (z, x, y, options) {

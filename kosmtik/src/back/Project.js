@@ -24,7 +24,6 @@ class Project extends ConfigEmitter {
         this.changeState('init');
         this.cachePath = path.join('tmp', this.id);
         this.beforeState('loaded', this.initMetaCache);
-        this.beforeState('loaded', this.initVectorCache);
     };
 
     load(force) {
@@ -74,14 +73,6 @@ class Project extends ConfigEmitter {
         return this.mapPool;
     };
 
-    export(options, callback) {
-        var format = options.format;
-        if (!this.config.exporters[format]) throw 'Unknown format ' + format;
-        var Exporter = require(this.config.exporters[format]).Exporter;
-        var exporter = new Exporter(this, options);
-        exporter.export(callback);
-    };
-
     toFront() {
         var options = {
             center: [this.mml.center[1], this.mml.center[0]],
@@ -114,10 +105,6 @@ class Project extends ConfigEmitter {
         return '/' + this.id + '/';
     };
 
-    getVectorCacheDir() {
-        return path.join(this.cachePath, 'vector');
-    };
-
     getMetaCacheDir() {
         return path.join(this.cachePath, 'meta');
     };
@@ -137,14 +124,6 @@ class Project extends ConfigEmitter {
         });
     };
 
-    initVectorCache(e) {
-        var self = this, dir = this.getVectorCacheDir();
-        Utils.mkdirs(dir, function (err) {
-            if (err) throw err;
-            self.config.log('Created vector cache dir', dir);
-            e.continue();
-        });
-    };
 }
 
 exports = module.exports = { Project };
