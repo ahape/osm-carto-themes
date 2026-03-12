@@ -148,14 +148,10 @@
       [way_pixels >= 64] { polygon-gamma: 0.3;  }
     }
     [zoom >= 13] {
-      [religion = 'jewish'] { polygon-pattern-file: url('patterns/grave_yard_jewish.svg'); }
-      polygon-pattern-alignment: global;
-      [religion = 'christian'] { polygon-pattern-file: url('patterns/grave_yard_christian.svg'); }
-      polygon-pattern-alignment: global;
-      [religion = 'muslim'] { polygon-pattern-file: url('patterns/grave_yard_muslim.svg'); }
-      polygon-pattern-alignment: global;
-      [religion = 'INT-generic'] { polygon-pattern-file: url('patterns/grave_yard_generic.svg'); }
-      polygon-pattern-alignment: global;
+      [religion = 'jewish'] { polygon-pattern-file: url('patterns/grave_yard_jewish.svg');  polygon-pattern-alignment: global; }
+      [religion = 'christian'] { polygon-pattern-file: url('patterns/grave_yard_christian.svg');  polygon-pattern-alignment: global; }
+      [religion = 'muslim'] { polygon-pattern-file: url('patterns/grave_yard_muslim.svg');  polygon-pattern-alignment: global; }
+      [religion = 'INT-generic'] { polygon-pattern-file: url('patterns/grave_yard_generic.svg');  polygon-pattern-alignment: global; }
       [religion = 'jewish'],
       [religion = 'christian'],
       [religion = 'muslim'],
@@ -720,14 +716,10 @@
   [natural = 'wood'][zoom >= 13]::wood {
     polygon-pattern-file: url('symbols/leaftype_unknown.svg'); // Lch(55,30,135)
     polygon-pattern-alignment: global;
-    [leaf_type = 'broadleaved'] { polygon-pattern-file: url('symbols/leaftype_broadleaved.svg'); }
-    polygon-pattern-alignment: global;
-    [leaf_type = 'needleleaved'] { polygon-pattern-file: url('symbols/leaftype_needleleaved.svg'); }
-    polygon-pattern-alignment: global;
-    [leaf_type = 'mixed'] { polygon-pattern-file: url('symbols/leaftype_mixed.svg'); }
-    polygon-pattern-alignment: global;
-    [leaf_type = 'leafless'] { polygon-pattern-file: url('symbols/leaftype_leafless.svg'); }
-    polygon-pattern-alignment: global;
+    [leaf_type = 'broadleaved'] { polygon-pattern-file: url('symbols/leaftype_broadleaved.svg');  polygon-pattern-alignment: global; }
+    [leaf_type = 'needleleaved'] { polygon-pattern-file: url('symbols/leaftype_needleleaved.svg');  polygon-pattern-alignment: global; }
+    [leaf_type = 'mixed'] { polygon-pattern-file: url('symbols/leaftype_mixed.svg');  polygon-pattern-alignment: global; }
+    [leaf_type = 'leafless'] { polygon-pattern-file: url('symbols/leaftype_leafless.svg');  polygon-pattern-alignment: global; }
     opacity: 0.4; // The entire layer has opacity to handle overlapping forests
   }
 }
