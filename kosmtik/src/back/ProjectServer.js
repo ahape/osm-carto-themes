@@ -77,7 +77,9 @@ class ProjectServer {
             mapScale = scale * (this.project.mml.scale || 1),
             size = this.project.tileSize() * scale,  // retina?
             mapPool = scale === 2 ? this.retinaPool : this.mapPool;
+        console.log("Acquiring mapPool for tile", z, x, y);
         mapPool.acquire(function (err, map) {
+            console.log("mapPool.acquire called back!");
             var release = function () {mapPool.release(map);};
             if (err) return self.raise(err.message, res);
             var tileClass = self.project.mml.source ? VectorBasedTile : self.project.metatile() === 1 ? Tile : MetatileBasedTile;

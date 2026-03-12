@@ -54,6 +54,7 @@
   [feature = 'landuse_quarry'][zoom >= 10] {
     polygon-fill: @quarry;
     polygon-pattern-file: url('symbols/quarry.svg');
+    polygon-pattern-alignment: global;
     [zoom >= 13] {
       line-width: 0.5;
       line-color: darken(@quarry, 10%);
@@ -98,8 +99,8 @@
     }
     [zoom >= 13] {
       polygon-pattern-file: url('patterns/plant_nursery.svg');
-      polygon-pattern-opacity: 0.6;
       polygon-pattern-alignment: global;
+      polygon-pattern-opacity: 0.6;
       [way_pixels >= 4]  { polygon-pattern-gamma: 0.75; }
       [way_pixels >= 64] { polygon-pattern-gamma: 0.3;  }
     }
@@ -148,9 +149,13 @@
     }
     [zoom >= 13] {
       [religion = 'jewish'] { polygon-pattern-file: url('patterns/grave_yard_jewish.svg'); }
+      polygon-pattern-alignment: global;
       [religion = 'christian'] { polygon-pattern-file: url('patterns/grave_yard_christian.svg'); }
+      polygon-pattern-alignment: global;
       [religion = 'muslim'] { polygon-pattern-file: url('patterns/grave_yard_muslim.svg'); }
+      polygon-pattern-alignment: global;
       [religion = 'INT-generic'] { polygon-pattern-file: url('patterns/grave_yard_generic.svg'); }
+      polygon-pattern-alignment: global;
       [religion = 'jewish'],
       [religion = 'christian'],
       [religion = 'muslim'],
@@ -409,6 +414,7 @@
     [way_pixels >= 64] { polygon-gamma: 0.3;  }
     [zoom >= 13] {
       polygon-pattern-file: url('symbols/rock_overlay.png');
+      polygon-pattern-alignment: global;
       [way_pixels >= 4]  { polygon-pattern-gamma: 0.75; }
       [way_pixels >= 64] { polygon-pattern-gamma: 0.3;  }
     }
@@ -422,6 +428,7 @@
       [way_pixels >= 64] { polygon-gamma: 0.3;  }
       [zoom >= 13] {
         polygon-pattern-file: url('symbols/scree_overlay.png');
+        polygon-pattern-alignment: global;
         [way_pixels >= 4]  { polygon-pattern-gamma: 0.75; }
         [way_pixels >= 64] { polygon-pattern-gamma: 0.3;  }
       }
@@ -712,9 +719,13 @@
   //Also landuse = forest, converted in the SQL
   [natural = 'wood'][zoom >= 13]::wood {
     polygon-pattern-file: url('symbols/leaftype_unknown.svg'); // Lch(55,30,135)
+    polygon-pattern-alignment: global;
     [leaf_type = 'broadleaved'] { polygon-pattern-file: url('symbols/leaftype_broadleaved.svg'); }
+    polygon-pattern-alignment: global;
     [leaf_type = 'needleleaved'] { polygon-pattern-file: url('symbols/leaftype_needleleaved.svg'); }
+    polygon-pattern-alignment: global;
     [leaf_type = 'mixed'] { polygon-pattern-file: url('symbols/leaftype_mixed.svg'); }
+    polygon-pattern-alignment: global;
     [leaf_type = 'leafless'] { polygon-pattern-file: url('symbols/leaftype_leafless.svg'); }
     polygon-pattern-alignment: global;
     opacity: 0.4; // The entire layer has opacity to handle overlapping forests

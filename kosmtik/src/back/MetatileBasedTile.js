@@ -22,11 +22,14 @@ class MetatileBasedTile {
             baseName = this.z + '.' + this.metaX + '.' + this.metaY + 'x' + this.mapScale,
             metaPath = path.join(basePath,  baseName + '.meta'),
             lockPath = path.join(basePath, baseName + '.lock');
-
+        console.log("MetatileBasedTile.render called for", metaPath);
         fs.readFile(metaPath, function (err, data) {
+            console.log("MetatileBasedTile.render readFile callback err:", err ? err.code : "none");
             if (err) {
                 if (err.code !== 'ENOENT') return cb(err);
+                console.log("Writing lock file", lockPath);
                 fs.writeFile(lockPath, '', {flag: 'wx'}, function (err) {
+                    console.log("Writing lock file callback err:", err ? err.code : "none");
                     if (err && err.code === 'EEXIST') {
                         try {
                             var watcher = fs.watch(lockPath);
@@ -68,9 +71,12 @@ class MetatileBasedTile {
     }
 
     renderMetatile(metaPath, project, map, cb) {
+        console.log("Entering renderMetatile for", metaPath);
         var self = this;
         var tile = new Tile(self.z, self.metaX, self.metaY, {size: this.metatile * this.size, scale: this.metatile, mapScale: this.mapScale});
+        console.log("Calling tile.render", self.z, self.metaX, self.metaY);
         tile.render(project, map, function (err, im) {
+            console.log("tile.render callback, err:", err);
             if (err) return cb(err);
             im.encode(self.format, function (err, buffer) {
                 if (err) return cb(err);

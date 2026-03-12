@@ -25,6 +25,7 @@
     }
     [int_intermittent = 'yes'] {
       polygon-pattern-file: url('patterns/intermittent_water.svg');
+      polygon-pattern-alignment: global;
       [way_pixels >= 4] { polygon-pattern-gamma: 0.75; }
       [way_pixels >= 64] { polygon-pattern-gamma: 0.6; }
     }
