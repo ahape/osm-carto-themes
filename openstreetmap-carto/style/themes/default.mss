@@ -143,7 +143,7 @@
                 "Noto Sans Vai Regular",
                 "Noto Sans Yi Regular",
                 "Noto Sans CJK JP Regular",
-                
+
                 "Noto Serif Tibetan Regular",
                 "Noto Emoji Regular",
 
@@ -381,7 +381,7 @@
 @motorway-width-z13:              6;
 @motorway-link-width-z13:         4;
 @trunk-width-z13:                 6;
-@trunk-link-width-z13:             4;
+@trunk-link-width-z13:            4;
 @primary-width-z13:               5;
 @primary-link-width-z13:          4;
 @secondary-width-z13:             5;
@@ -546,14 +546,14 @@
 @halo-color-for-minor-road:       white;
 @lowzoom-halo-color:              white;
 @lowzoom-halo-width:              1;
-@lowzoom-halo-opacity:			  0.4; 
+@lowzoom-halo-opacity:            0.4;
 @motorway-oneway-arrow-color:     darken(@motorway-casing, 25%);
 @trunk-oneway-arrow-color:        darken(@trunk-casing, 25%);
 @primary-oneway-arrow-color:      darken(@primary-casing, 15%);
 @secondary-oneway-arrow-color:    darken(@secondary-casing, 10%);
 @tertiary-oneway-arrow-color:     darken(@tertiary-casing, 30%);
 @residential-oneway-arrow-color:  darken(@residential-casing, 40%);
-@living-street-oneway-arrow-color: darken(@residential-casing, 30%);
+@living-street-oneway-arrow-color:darken(@residential-casing, 30%);
 @pedestrian-oneway-arrow-color:   darken(@pedestrian-casing, 25%);
 @bus-guideway-oneway-arrow-color: darken(@bus-guideway-fill, 25%);
 @raceway-oneway-arrow-color:      darken(@raceway-fill, 50%);
